@@ -1,0 +1,11 @@
+{
+  "name": "ts-practice-js-crm",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

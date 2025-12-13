@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>JS Starter CRM</title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                margin: 24px;
+                display: grid;
+                grid-template-columns: 380px 1fr;
+                gap: 24px;
+            }
+            input,
+            button,
+            textarea,
+            select {
+                width: 100%;
+                padding: 10px;
+                margin: 6px 0;
+            }
+            .card {
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 12px;
+                margin: 8px 0;
+                cursor: pointer;
+            }
+            .row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            pre {
+                background: #f6f6f6;
+                padding: 12px;
+                border-radius: 10px;
+                overflow: auto;
+            }
+            .muted {
+                color: #666;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <h2>Search</h2>
+            <input id="q" placeholder="name or deal..." />
+            <button id="searchBtn">Search</button>
+            <div id="list"></div>
+        </section>
+
+        <section>
+            <h2>Details</h2>
+            <div id="details" class="muted">Select item...</div>
+
+            <h3>Create Deal</h3>
+            <div class="row">
+                <input id="dealTitle" placeholder="title" />
+                <input id="dealAmount" placeholder="amount (number)" />
+            </div>
+            <button id="createDealBtn">Create deal for selected</button>
+
+            <h3>Owner Deals</h3>
+            <div id="ownerDeals"></div>
+
+            <h3>Patch</h3>
+            <div class="row">
+                <input
+                    id="path"
+                    placeholder="e.g. name / custom.score / id / ownerId"
+                />
+                <input id="value" placeholder="value (json)" />
+            </div>
+            <button id="applyPatchBtn">Apply patch</button>
+
+            <h3>Notes</h3>
+            <select id="noteKind">
+                <option value="entity">entity</option>
+                <option value="deal">deal</option>
+            </select>
+            <textarea id="noteText" rows="3" placeholder="note..."></textarea>
+            <button id="addNoteBtn">Add note</button>
+            <div id="notes"></div>
+
+            <h3>Raw JSON</h3>
+            <pre id="raw"></pre>
+        </section>
+
+        <script type="module" src="/app.js"></script>
+    </body>
+</html>
