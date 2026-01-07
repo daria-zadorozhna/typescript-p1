@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+
+    "strict": true,
+    "skipLibCheck": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": true,
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    "exactOptionalPropertyTypes": true,
+
+    "noImplicitOverride": true,
+
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "declaration": true,
+
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "public"],
+  "references": [
+    {
+      "path": "./tsconfig.public.json"
+    }
+  ]
+}
