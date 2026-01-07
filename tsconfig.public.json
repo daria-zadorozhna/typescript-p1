@@ -1,14 +1,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    //"composite": true,
+    "composite": true,
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
 
     "target": "ES2020",
 
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "noEmiy":true,
+    //"noEmit":true,
 
     "outDir": "./dist/public",
     "rootDir": "./public"

@@ -8,8 +8,8 @@ import {
   listNotes,
   touch,
   createDeal,
-} from "./db.js";
-import { applyOpsInPlace } from "./patch.js";
+} from "./db";
+import { applyOpsInPlace } from "./patch";
 
 const app = express();
 app.use(express.json());
