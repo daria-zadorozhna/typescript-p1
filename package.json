@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx src/server.ts"
+    "dev": "tsx --watch src/server.ts",
+    "watch": "tsc -b -w"
   },
   "dependencies": {
     "express": "^4.19.2"

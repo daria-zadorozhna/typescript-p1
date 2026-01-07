@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use("/", express.static(path.join(__dirname, "../public")));
+app.use("/", express.static(path.join(__dirname, "../dist/public")));
 
 app.get("/api/search", (req, res) => {
   const q = String(req.query.q ?? "")

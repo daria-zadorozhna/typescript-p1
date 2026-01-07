@@ -3,7 +3,6 @@ async function fetchJson(url, init) {
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
   return await res.json();
 }
-
 const $ = (id) => document.getElementById(id);
 
 const q = $("q");
