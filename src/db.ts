@@ -1,10 +1,15 @@
+import { type Entity, type Deal, type Note } from "./types";
+//import type {Entity} from "./types" //the same
 const nowIso = () => new Date().toISOString();
-const makeId = (prefix) =>
-  `${prefix}_${Math.random().toString(16).slice(2, 10)}`;
+
+/*const makeId = (prefix: string) =>
+Produces error: Type '`${string}_${string}`' is not assignable to type '`n_${string}`'.ts(2322)*/
+const makeId = <Prefix extends string>(prefix: Prefix) =>
+  `${prefix}_${Math.random().toString(16).slice(2, 10)}` as const;
 
 // ВАЖНО: "почти все" id — строки, но одна запись имеет id числом.
 // Это редкий баг: Map различает 2001 и "2001" => иногда 404, иногда "пропадает" сущность.
-const entitiesSeed = [
+const entitiesSeed: Entity[] = [
   {
     id: "p_1001",
     kind: "person",
@@ -17,7 +22,7 @@ const entitiesSeed = [
     custom: { score: 42, isActive: true },
   },
   {
-    id: 2001, // <-- subtle: number вместо string
+    id: "c_2001", //changed.resason: BA or Product told us id:number without prefix c_ was a bug
     kind: "company",
     name: "GitLab",
     createdAt: nowIso(),
@@ -59,7 +64,7 @@ for (let i = 0; i < 10; i++) {
 
 export const entities = new Map(entitiesSeed.map((e) => [e.id, e]));
 
-const dealsSeed = [
+const dealsSeed: Deal[] = [
   {
     id: "d_3001",
     title: "Renewal Q4",
@@ -75,7 +80,7 @@ const dealsSeed = [
     title: "Enterprise Upsell",
     stage: "negotiation",
     amount: 50000,
-    ownerId: 2001, // <-- subtle: привязка к company с numeric id
+    ownerId: "p_2001", //changed. reason: error data was spotted
     contactIds: [],
     createdAt: nowIso(),
     updatedAt: nowIso(),
@@ -95,23 +100,23 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
-export const deals = new Map(dealsSeed.map((d) => [d.id, d]));
+export const deals = new Map<Deal["id"], Deal>(dealsSeed.map((d) => [d.id, d]));
 
 export const notesByKey = new Map();
 // key = `${kind}:${id}`
 
-export function listNotes(kind, id) {
+export function listNotes(kind: string, id: string) {
   return notesByKey.get(`${kind}:${id}`) ?? [];
 }
 
-export function addNote(kind, id, text) {
+export function addNote(kind: string, id: string, text: string) {
   const note = {
     id: makeId("n"),
     subjectKind: kind,
     subjectId: id,
     text,
     createdAt: nowIso(),
-  };
+  } as const satisfies Note;
   const key = `${kind}:${id}`;
   const arr = notesByKey.get(key);
   if (arr) arr.push(note);
@@ -119,11 +124,14 @@ export function addNote(kind, id, text) {
   return note;
 }
 
-export function touch(obj) {
+export function touch(obj: { updatedAt: string }) {
   obj.updatedAt = nowIso();
 }
 
-export function createDeal({ title, amount, ownerId, contactIds }) {
+type CreateDealInput = Pick<Deal, "title" | "amount" | "ownerId" | "contactIds">
+
+//createDeal - is "business" name, thus param type should be infered from type Deal
+export function createDeal({ title, amount, ownerId, contactIds }: CreateDealInput) {
   const d = {
     id: makeId("d"),
     title,
@@ -133,7 +141,7 @@ export function createDeal({ title, amount, ownerId, contactIds }) {
     contactIds: Array.isArray(contactIds) ? contactIds : [],
     createdAt: nowIso(),
     updatedAt: nowIso(),
-  };
+  } as const satisfies Deal;
   deals.set(d.id, d);
   return d;
 }
